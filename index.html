@@ -149,6 +149,9 @@ Available commands:
 - whoami: Displays the current user's name.
 - cd [directory]: Change to a specific directory.
 - cd ..: Go back to the root directory (~).
+- info: Information about the user.
+- star: give a star to this repository.
+- follow: Follow me ;)
 `;
 
             // Handle Enter key press
@@ -203,6 +206,22 @@ Available commands:
                     case 'help':
                         outputCommand(command, commandsList);
                         break;
+                    
+                    case 'star':
+                    	outputCommand(command, `Opening the repo...`);
+                        setTimeout(() => {
+                             window.location.href = 'https://github.com/brunoooost/mywebsite'; // Link for repo3
+                            }, 1000);
+                        break;
+                    
+                    case 'follow':
+                    	outputCommand(command, `Opening the git profile...`);
+                        setTimeout(() => {
+                             window.location.href = 'https://github.com/brunoooost/'; // Link for repo3
+                            }, 1000);
+                        break;
+
+
 
                     case 'clear':
                         output.textContent = 'root@kali:~$';
@@ -210,6 +229,10 @@ Available commands:
 
                     case 'whoami':
                         outputCommand(command, `bruno salvatella teichman`);
+                        break;
+                        
+                    case 'info':
+                        outputCommand(command, `My name is Bruno Salvatella, a 17-year-old student with a passion for cybersecurity and software development. If you like this website give a star on github or write down "star". `);
                         break;
 
                     case 'cd':
