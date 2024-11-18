@@ -134,7 +134,7 @@
             // Files and directories in the virtual "directory"
             const files = ["website.html", "repositories"];
             const directories = {
-                'repositories': ['cybersources', 'flipzero_payloads', 'repo3']
+                'repositories': ['cybersources', 'fliperzero_payloads', 'repo3']
             };
 
             let currentDir = '~';  // Default directory
@@ -149,7 +149,6 @@ Available commands:
 - whoami: Displays the current user's name.
 - cd [directory]: Change to a specific directory.
 - cd ..: Go back to the root directory (~).
-- ip a: Show IP address.
 `;
 
             // Handle Enter key press
@@ -173,8 +172,33 @@ Available commands:
                         break;
 
                     case 'open':
-                        // Handle open command logic...
+                        if (argument === 'cybersources') {
+                            outputCommand(command, `Opening cybersources...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://brunoooost.github.io/cybersources/'; // Link for repo1
+                            }, 1000);
+                        } else if (argument === 'flipzero_payloads') {
+                            outputCommand(command, `Opening payloads...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://brunoooost.github.io/payloads_fliperZero/'; // Link for repo2
+                            }, 1000);
+                        } else if (argument === 'repo3') {
+                            outputCommand(command, `Opening repo3...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://example.com/repo3'; // Link for repo3
+                            }, 1000);
+                        } else if (argument === 'website.html') {
+                            outputCommand(command, `Opening website...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://brunoooost.github.io/brunoooost/'; // Link for repo3
+                            }, 1000);
+                        }
+                        else {
+                            outputCommand(command, `Repository not found: ${argument}`);
+                        }
                         break;
+
+                   
 
                     case 'help':
                         outputCommand(command, commandsList);
@@ -189,15 +213,24 @@ Available commands:
                         break;
 
                     case 'cd':
-                        // Handle cd command logic...
-                        break;
-
-                    case 'ip':
-                        if (args[1] === 'a') {
-                            outputCommand(command, `inet 192.168.1.2/24 brd 192.168.1.255 scope global eth0`);
-                           
+                        if (argument === '..') {
+                            // If we are already at the root directory, don't change
+                            if (currentDir === '~') {
+                                outputCommand(command, `Already at root directory.`);
+                            } else {
+                                currentDir = '~'; // Go back to the root directory
+                                outputCommand(command, `Changed directory to /`);
+                            }
+                        } else if (argument === 'repositories') {
+                            currentDir = 'repositories';
+                            outputCommand(command, `Changed directory to /repositories`);
+                            updatePrompt();
+                        } else if (directories[argument]) {
+                            currentDir = argument;
+                            outputCommand(command, `Changed directory to /${argument}`);
+                            updatePrompt();
                         } else {
-                            outputCommand(command, `Command not found: ${command}`);
+                            outputCommand(command, `Directory not found: ${argument}`);
                         }
                         break;
 
