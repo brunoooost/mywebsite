@@ -134,7 +134,7 @@
             // Files and directories in the virtual "directory"
             const files = ["website.html", "repositories"];
             const directories = {
-                'repositories': ['repo1', 'repo2', 'repo3']
+                'repositories': ['cybersources', 'flipzero_payloads', 'repo3']
             };
 
             let currentDir = '~';  // Default directory
@@ -169,19 +169,19 @@ Available commands:
 
                 switch (mainCommand) {
                     case 'ls':
-                        outputCommand(command, `${getFilesInDir(currentDir).join(' ')}`);
+                        outputCommand(command, `${getFilesInDir(currentDir).join(', ')}`);
                         break;
 
                     case 'open':
-                        if (argument === 'repo1') {
-                            outputCommand(command, `Opening repo1...`);
+                        if (argument === 'cybersources') {
+                            outputCommand(command, `Opening cybersources...`);
                             setTimeout(() => {
-                                window.location.href = 'https://example.com/repo1'; // Link for repo1
+                                window.location.href = 'https://github.com/brunoooost/cybersources'; // Link for repo1
                             }, 1000);
-                        } else if (argument === 'repo2') {
-                            outputCommand(command, `Opening repo2...`);
+                        } else if (argument === 'FlipZero_payloads') {
+                            outputCommand(command, `Opening payloads_fliperZero...`);
                             setTimeout(() => {
-                                window.location.href = 'https://example.com/repo2'; // Link for repo2
+                                window.location.href = 'https://github.com/brunoooost/payloads_flipperZero'; // Link for repo2
                             }, 1000);
                         } else if (argument === 'repo3') {
                             outputCommand(command, `Opening repo3...`);
