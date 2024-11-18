@@ -142,7 +142,7 @@ Available commands:
 - help: Display this help message.
 - clear: Clear the terminal screen.
 - ls: Shows files in the current directory.
-- hostname: Shows the name of the host.
+- whoami: Displays the current users name.
 `;
 
             // Handle Enter key press
@@ -195,7 +195,7 @@ Available commands:
                         output.textContent = 'root@kali:~$';
                         break;
                     
-                    case 'hostname':
+                    case 'whoami':
                         outputCommand(command, `bruno salvatella teichman`);
                         break;
 
