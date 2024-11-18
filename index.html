@@ -149,6 +149,7 @@ Available commands:
 - whoami: Displays the current user's name.
 - cd [directory]: Change to a specific directory.
 - cd ..: Go back to the root directory (~).
+- ip a: Show IP address.
 `;
 
             // Handle Enter key press
@@ -172,35 +173,8 @@ Available commands:
                         break;
 
                     case 'open':
-                        if (argument === 'cybersources') {
-                            outputCommand(command, `Opening cybersources...`);
-                            setTimeout(() => {
-                                window.location.href = 'https://github.com/brunoooost/cybersources'; // Link for repo1
-                            }, 1000);
-                        } else if (argument === 'FlipZero_payloads') {
-                            outputCommand(command, `Opening payloads_fliperZero...`);
-                            setTimeout(() => {
-                                window.location.href = 'https://github.com/brunoooost/payloads_flipperZero'; // Link for repo2
-                            }, 1000);
-                        } else if (argument === 'repo3') {
-                            outputCommand(command, `Opening repo3...`);
-                            setTimeout(() => {
-                                window.location.href = 'https://example.com/repo3'; // Link for repo3
-                            }, 1000);
-                            
-                        
-                            
-                        }	else if (argument === 'website.html') {
-                            outputCommand(command, `Opening website...`);
-                            setTimeout(() => {
-                                window.location.href = 'https://brunoooost.github.io/brunoooost/'; // Link 
-                            }, 1000);
-                        }
-                        else {
-                            outputCommand(command, `Repository not found: ${argument}`);
-                        }
+                        // Handle open command logic...
                         break;
-
 
                     case 'help':
                         outputCommand(command, commandsList);
@@ -215,24 +189,15 @@ Available commands:
                         break;
 
                     case 'cd':
-                        if (argument === '..') {
-                            // If we are already at the root directory, don't change
-                            if (currentDir === '~') {
-                                outputCommand(command, `Already at root directory.`);
-                            } else {
-                                currentDir = '~'; // Go back to the root directory
-                                outputCommand(command, `Changed directory to /`);
-                            }
-                        } else if (argument === 'repositories') {
-                            currentDir = 'repositories';
-                            outputCommand(command, `Changed directory to /repositories`);
-                            updatePrompt();
-                        } else if (directories[argument]) {
-                            currentDir = argument;
-                            outputCommand(command, `Changed directory to /${argument}`);
-                            updatePrompt();
+                        // Handle cd command logic...
+                        break;
+
+                    case 'ip':
+                        if (args[1] === 'a') {
+                            // Display the IP address information on the same line
+                            outputCommand(command, `inet 192.168.1.2/24 brd 192.168.1.255 scope global eth0 | inet6 fe80::a00:27ff:fe9b:2c7e/64 scope link`);
                         } else {
-                            outputCommand(command, `Directory not found: ${argument}`);
+                            outputCommand(command, `Command not found: ${command}`);
                         }
                         break;
 
@@ -259,7 +224,7 @@ Available commands:
 
             // Function to output text to the terminal
             function outputCommand(command, message) {
-                output.textContent += `\nroot@kali:${currentDir}$ ${command}\n${message}\n`;
+                output.textContent += `\nroot@kali:${currentDir}$ ${command} ${message}`;
                 output.scrollTop = output.scrollHeight;
             }
         });
