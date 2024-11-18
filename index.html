@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal Emulator</title>
+    <title>bruno's terminal</title>
     <style>
         /* General Reset */
         * {
@@ -114,11 +114,12 @@
             // List of available commands
             const commandsList = `
 Available commands:
-- header [file_name]: Redirect to the main website
-- open [file_name]: Open a specific website
-- help: Display this help message
-- clear: Clear the terminal screen
-- ls: Shows files in the current directory
+- header [file_name]: Redirect to the main website.
+- open [file_name]: Open a specific website.
+- help: Display this help message.
+- clear: Clear the terminal screen.
+- ls: Shows files in the current directory.
+- hostname: Shows the name of the host.
 `;
 
             // Handle Enter key press
@@ -169,6 +170,10 @@ Available commands:
 
                     case 'clear':
                         output.textContent = 'root@kali:~$';
+                        break;
+                    
+                    case 'hostname':
+                        outputCommand(command, `bruno salvatella teichman`);
                         break;
 
                     default:
