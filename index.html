@@ -131,8 +131,13 @@
             const commandInput = document.getElementById('command-input');
             const output = document.getElementById('output');
 
-            // Files in the virtual "directory"
-            const files = ["website.html"];
+            // Files and directories in the virtual "directory"
+            const files = ["website.html", "repositories"];
+            const directories = {
+                'repositories': ['repo1', 'repo2', 'repo3']
+            };
+
+            let currentDir = '~';  // Default directory
 
             // List of available commands
             const commandsList = `
@@ -142,7 +147,9 @@ Available commands:
 - help: Display this help message.
 - clear: Clear the terminal screen.
 - ls: Shows files in the current directory.
-- whoami: Displays the current users name.
+- whoami: Displays the current user's name.
+- cd [directory]: Change to a specific directory.
+- cd ..: Go back to the root directory (~).
 `;
 
             // Handle Enter key press
@@ -162,17 +169,27 @@ Available commands:
 
                 switch (mainCommand) {
                     case 'ls':
-                        outputCommand(command, `${files.join('\n')}`);
+                        outputCommand(command, `${getFilesInDir(currentDir).join(' ')}`);
                         break;
 
                     case 'open':
-                        if (files.includes(argument)) {
-                            outputCommand(command, `Opening ${argument}...`);
+                        if (argument === 'repo1') {
+                            outputCommand(command, `Opening repo1...`);
                             setTimeout(() => {
-                                window.location.href = 'https://another-example.com'; // Replace with your link
+                                window.location.href = 'https://example.com/repo1'; // Link for repo1
+                            }, 1000);
+                        } else if (argument === 'repo2') {
+                            outputCommand(command, `Opening repo2...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://example.com/repo2'; // Link for repo2
+                            }, 1000);
+                        } else if (argument === 'repo3') {
+                            outputCommand(command, `Opening repo3...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://example.com/repo3'; // Link for repo3
                             }, 1000);
                         } else {
-                            outputCommand(command, `File not found: ${argument}`);
+                            outputCommand(command, `Repository not found: ${argument}`);
                         }
                         break;
 
@@ -194,9 +211,31 @@ Available commands:
                     case 'clear':
                         output.textContent = 'root@kali:~$';
                         break;
-                    
+
                     case 'whoami':
                         outputCommand(command, `bruno salvatella teichman`);
+                        break;
+
+                    case 'cd':
+                        if (argument === '..') {
+                            // If we are already at the root directory, don't change
+                            if (currentDir === '~') {
+                                outputCommand(command, `Already at root directory.`);
+                            } else {
+                                currentDir = '~'; // Go back to the root directory
+                                outputCommand(command, `Changed directory to /`);
+                            }
+                        } else if (argument === 'repositories') {
+                            currentDir = 'repositories';
+                            outputCommand(command, `Changed directory to /repositories`);
+                            updatePrompt();
+                        } else if (directories[argument]) {
+                            currentDir = argument;
+                            outputCommand(command, `Changed directory to /${argument}`);
+                            updatePrompt();
+                        } else {
+                            outputCommand(command, `Directory not found: ${argument}`);
+                        }
                         break;
 
                     default:
@@ -205,9 +244,24 @@ Available commands:
                 }
             }
 
+            // Function to get files in the current directory
+            function getFilesInDir(dir) {
+                if (dir === '~') {
+                    return files;
+                } else if (directories[dir]) {
+                    return directories[dir];
+                }
+                return [];
+            }
+
+            // Function to update the terminal prompt
+            function updatePrompt() {
+                output.textContent = `root@kali:${currentDir}$`;
+            }
+
             // Function to output text to the terminal
             function outputCommand(command, message) {
-                output.textContent += `\nroot@kali:~$ ${command}\n${message}\n`;
+                output.textContent += `\nroot@kali:${currentDir}$ ${command}\n${message}\n`;
                 output.scrollTop = output.scrollHeight;
             }
         });
