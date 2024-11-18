@@ -142,7 +142,6 @@
             // List of available commands
             const commandsList = `
 Available commands:
-- header [file_name]: Redirect to the main website.
 - open [file_name]: Open a specific website.
 - help: Display this help message.
 - clear: Clear the terminal screen.
@@ -188,21 +187,20 @@ Available commands:
                             setTimeout(() => {
                                 window.location.href = 'https://example.com/repo3'; // Link for repo3
                             }, 1000);
-                        } else {
+                            
+                        
+                            
+                        }	else if (argument === 'website.html') {
+                            outputCommand(command, `Opening website...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://github.com/brunoooost/brunoooost/'; // Link 
+                            }, 1000);
+                        }
+                        else {
                             outputCommand(command, `Repository not found: ${argument}`);
                         }
                         break;
 
-                    case 'header':
-                        if (files.includes(argument)) {
-                            outputCommand(command, `Redirecting to main website via ${argument}...`);
-                            setTimeout(() => {
-                                window.location.href = 'https://brunoooost.github.io/brunoooost/';
-                            }, 1000);
-                        } else {
-                            outputCommand(command, `File not found: ${argument}`);
-                        }
-                        break;
 
                     case 'help':
                         outputCommand(command, commandsList);
