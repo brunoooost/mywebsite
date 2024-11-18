@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bruno's terminal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #000;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .terminal {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            height: 500px;
+            background-color: #1d1f21;
+            border: 2px solid #4d4d4d;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            z-index: 10;
+            color: #f8f8f2;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: inherit;
+            line-height: 1.4;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #f8f8f2;
+            font-family: inherit;
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        input::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #f8f8f2;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .character {
+            position: absolute;
+            color: #00ff00;
+            font-size: 18px;
+            animation: floatDown linear infinite;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        @keyframes floatDown {
+            0% {
+                transform: translateY(-50vh);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <pre id="output">root@kali/repositories:~$</pre>
+        <input type="text" id="command-input" autocomplete="off" autofocus />
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const commandInput = document.getElementById('command-input');
+            const output = document.getElementById('output');
+
+            const githubRepos = [
+                { name: "repo1", url: "https://github.com/brunoooost/repo1" },
+                { name: "repo2", url: "https://github.com/brunoooost/repo2" },
+                { name: "repo3", url: "https://github.com/brunoooost/repo3" }
+            ];
+
+            const commandsList = `
+Available commands:
+- ls: Show repositories.
+- open [repo_name]: Open a specific repository.
+- cd ..: Go to your GitHub profile.
+- help: Display this help message.
+- clear: Clear the terminal screen.
+- whoami: Displays the current user name.
+`;
+
+            let currentDir = "~";
+
+            commandInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    const command = commandInput.value.trim();
+                    processCommand(command);
+                    commandInput.value = '';
+                }
+            });
+
+            function processCommand(command) {
+                const args = command.split(' ');
+                const mainCommand = args[0];
+                const argument = args[1];
+
+                switch (mainCommand) {
+                    case 'ls':
+                        listRepositories(', ');
+                        break;
+
+                    case 'open':
+                        openRepository(argument);
+                        break;
+
+                    case 'cd':
+                        if (argument === '..') {
+                            goToGitHubProfile();
+                        } else {
+                            outputCommand(command, `Command not found: ${command}`);
+                        }
+                        break;
+
+                    case 'help':
+                        outputCommand(command, commandsList);
+                        break;
+
+                    case 'clear':
+                        output.textContent = 'root@kali/repositories:~$';
+                        break;
+
+                    case 'whoami':
+                        outputCommand(command, `bruno salvatella teichman`);
+                        break;
+
+                    default:
+                        outputCommand(command, `Command not found: ${command}`);
+                        break;
+                }
+            }
+
+            function listRepositories(separator) {
+                outputCommand('ls', githubRepos.map(repo => repo.name).join(separator));
+            }
+
+            function openRepository(repoName) {
+                const repo = githubRepos.find(r => r.name === repoName);
+                if (repo) {
+                    outputCommand(`open ${repoName}`, `Opening ${repoName}...`);
+                    setTimeout(() => {
+                        window.location.href = repo.url;
+                    }, 1000);
+                } else {
+                    outputCommand(`open ${repoName}`, `Repository not found: ${repoName}`);
+                }
+            }
+
+            function goToGitHubProfile() {
+                outputCommand('cd ..', `Redirecting to main page...`);
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // This now redirects to index.html
+                }, 1000);
+            }
+
+            function outputCommand(command, message) {
+                output.textContent += `\nroot@kali/repositories:~$ ${command}\n${message}\n`;
+                output.scrollTop = output.scrollHeight;
+            }
+        });
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+        const maxCharacters = 100;
+
+        function createCharacter() {
+            const charElement = document.createElement('span');
+            charElement.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
+            charElement.classList.add('character');
+            document.body.appendChild(charElement);
+
+            const startX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 5 + 3;
+            const delay = Math.random() * -10;
+
+            charElement.style.left = `${startX}px`;
+            charElement.style.animationDuration = `${duration}s`;
+            charElement.style.animationDelay = `${delay}s`;
+
+            setTimeout(() => {
+                charElement.remove();
+            }, (duration + Math.abs(delay)) * 1000);
+        }
+
+        setInterval(createCharacter, 100);
+        for (let i = 0; i < maxCharacters; i++) {
+            createCharacter();
+        }
+    </script>
+</body>
+</html>
