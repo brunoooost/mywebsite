@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Emulator</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1d1f21; /* Dark background similar to Kali Linux */
+            font-family: "Courier New", Courier, monospace; /* Terminal-like font */
+            color: #f8f8f2; /* Light text color */
+            overflow: hidden;
+        }
+
+        /* Terminal Container */
+        .terminal {
+            width: 80%;
+            max-width: 800px;
+            height: 500px;
+            background-color: #1d1f21; /* Terminal background */
+            border: 2px solid #4d4d4d; /* Border to mimic terminal window */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        /* Terminal Output */
+        pre {
+            white-space: pre-wrap; /* Wrap text to fit container */
+            word-wrap: break-word;
+            font-family: inherit; /* Consistent terminal font */
+            line-height: 1.4;
+        }
+
+        /* Input Field Styling */
+        input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #f8f8f2; /* Text color */
+            font-family: inherit; /* Consistent terminal font */
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Input Field Cursor */
+        input::selection {
+            background-color: #44475a; /* Highlight color for selected text */
+            color: #ffffff;
+        }
+
+        /* Scrolling Effect */
+        .terminal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal::-webkit-scrollbar-thumb {
+            background-color: #44475a;
+            border-radius: 4px;
+        }
+
+        .terminal::-webkit-scrollbar-track {
+            background-color: #282a36;
+        }
+
+        /* Blinking Cursor Effect */
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        input::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #f8f8f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <pre id="output">root@kali:~$</pre>
+        <input type="text" id="command-input" autocomplete="off" autofocus />
+    </div>
+
+    <script>
+        // JavaScript to handle terminal commands
+        document.addEventListener('DOMContentLoaded', () => {
+            const commandInput = document.getElementById('command-input');
+            const output = document.getElementById('output');
+
+            // Files in the virtual "directory"
+            const files = ["website.html"];
+
+            // List of available commands
+            const commandsList = `
+Available commands:
+- header [file_name]: Redirect to the main website
+- open [file_name]: Open a specific website
+- help: Display this help message
+- clear: Clear the terminal screen
+- ls: Shows files in the current directory
+`;
+
+            // Handle Enter key press
+            commandInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    const command = commandInput.value.trim();
+                    processCommand(command);
+                    commandInput.value = ''; // Clear input field
+                }
+            });
+
+            // Function to process commands
+            function processCommand(command) {
+                const args = command.split(' ');
+                const mainCommand = args[0];
+                const argument = args[1];
+
+                switch (mainCommand) {
+                    case 'ls':
+                        outputCommand(command, `${files.join('\n')}`);
+                        break;
+
+                    case 'open':
+                        if (files.includes(argument)) {
+                            outputCommand(command, `Opening ${argument}...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://another-example.com'; // Replace with your link
+                            }, 1000);
+                        } else {
+                            outputCommand(command, `File not found: ${argument}`);
+                        }
+                        break;
+
+                    case 'header':
+                        if (files.includes(argument)) {
+                            outputCommand(command, `Redirecting to main website via ${argument}...`);
+                            setTimeout(() => {
+                                window.location.href = 'https://brunoooost.github.io/brunoooost/'; // Replace with your link
+                            }, 1000);
+                        } else {
+                            outputCommand(command, `File not found: ${argument}`);
+                        }
+                        break;
+
+                    case 'help':
+                        outputCommand(command, commandsList);
+                        break;
+
+                    case 'clear':
+                        output.textContent = 'root@kali:~$';
+                        break;
+
+                    default:
+                        outputCommand(command, `Command not found: ${command}`);
+                        break;
+                }
+            }
+
+            // Function to output text to the terminal
+            function outputCommand(command, message) {
+                output.textContent += `\nroot@kali:~$ ${command}\n${message}\n`;
+                output.scrollTop = output.scrollHeight; // Scroll to the bottom
+            }
+        });
+    </script>
+</body>
+</html>
