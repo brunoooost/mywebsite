@@ -194,8 +194,8 @@ Available commands:
 
                     case 'ip':
                         if (args[1] === 'a') {
-                            // Display the IP address information on the same line
-                            outputCommand(command, `inet 192.168.1.2/24 brd 192.168.1.255 scope global eth0 | inet6 fe80::a00:27ff:fe9b:2c7e/64 scope link`);
+                            outputCommand(command, `inet 192.168.1.2/24 brd 192.168.1.255 scope global eth0`);
+                           
                         } else {
                             outputCommand(command, `Command not found: ${command}`);
                         }
@@ -224,7 +224,7 @@ Available commands:
 
             // Function to output text to the terminal
             function outputCommand(command, message) {
-                output.textContent += `\nroot@kali:${currentDir}$ ${command} ${message}`;
+                output.textContent += `\nroot@kali:${currentDir}$ ${command}\n${message}\n`;
                 output.scrollTop = output.scrollHeight;
             }
         });
