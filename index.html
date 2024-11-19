@@ -172,7 +172,7 @@ Available commands:
 
                 switch (mainCommand) {
                     case 'ls':
-                        outputCommand(command, `${getFilesInDir(currentDir).join(' ')}`);
+                        outputCommand(command, `${getFilesInDir(currentDir).join('	')}`);
                         break;
 
                     case 'open':
