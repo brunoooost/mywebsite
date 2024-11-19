@@ -133,7 +133,7 @@
             const output = document.getElementById('output');
 
             // Files and directories in the virtual "directory"
-            const files = ["website.html", "links.html", "Repositories"];
+            const files = ["website.html", "links.html","location.gis", "Repositories"];
             const directories = {
                 'Repositories': ['cybersources', 'fliperzero_payloads', 'repo3']
             };
@@ -204,6 +204,11 @@ Available commands:
                                 window.location.href = 'links.html'; // Link
                             }, 1000);
                         }
+                        
+                        else if (argument === 'location.gis') {
+                            outputCommand(command, `Loading the current location...\nCurrent location: Spain, Barcelona`);
+                        
+                        }
                         else {
                             outputCommand(command, `File not found: ${argument}`);
                         }
@@ -228,8 +233,6 @@ Available commands:
                              window.location.href = 'https://github.com/brunoooost/'; // Link for repo3
                             }, 1000);
                         break;
-
-
 
                     case 'clear':
                         output.textContent = 'root@kali:~$';
