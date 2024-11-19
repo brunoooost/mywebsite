@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Characters with Links</title>
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+            font-family: Arial, sans-serif;
+        }
+
+        .character {
+            position: absolute;
+            top: -2rem;
+            font-size: 1.5rem;
+            color: #0F0;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Centered Linktree Container with Solid Box */
+        .linktree {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+
+            padding: 2rem 3rem;
+            border-radius: 10px;
+        }
+
+        .linktree h1 {
+            color: #0F0;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .linktree h2 {
+            color: #0F0;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+	
+    	
+        .linktree a {
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            color: #0F0;
+            text-decoration: none;
+            border: 2px solid #0F0;
+            border-radius: 8px;
+            background: black; /* Solid button background */
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .linktree a:hover {
+            background: #0F0;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Falling Characters Script -->
+    <script>
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+        const maxCharacters = 100;
+
+        function createCharacter() {
+            const charElement = document.createElement('span');
+            charElement.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
+            charElement.classList.add('character');
+            document.body.appendChild(charElement);
+
+            const startX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 5 + 3;
+            const delay = Math.random() * -10;
+
+            charElement.style.left = `${startX}px`;
+            charElement.style.animationDuration = `${duration}s`;
+            charElement.style.animationDelay = `${delay}s`;
+
+            setTimeout(() => {
+                charElement.remove();
+            }, (duration + Math.abs(delay)) * 1000);
+        }
+
+        setInterval(createCharacter, 100);
+        for (let i = 0; i < maxCharacters; i++) {
+            createCharacter();
+        }
+    </script>
+
+    <!-- Centered Linktree Section -->
+    <div class="linktree">
+        <h1>Bruno Salvatella</h1>
+        <h2>This are my links:</h2>
+        <a href="https://www.instagram.com/brusalvateich/" target="_blank">instagram</a>
+        <a href="https://github.com/brunoooost" target="_blank">github</a>
+        <a href="https://www.linkedin.com/in/bruno-salvatella-teichman/" target="_blank">linkedin</a>
+        <a href="https://signal.me/#eu/YiH6rZq86ipsfPShqXmtjw-kE6ATHrvE_sKfofhKNCuOry3YQEhHXInFqhMWLZqo" target="_blank">signal</a>
+        
+    </div>
+</body>
+</html>
