@@ -150,6 +150,7 @@ Available commands:
 - whoami: Displays the current user's name.
 - cd [directory]: Change to a specific directory.
 - cd ..: Go back to the root directory (~).
+- exit: Exit the website.
 - credits: Information about the user.
 - star: give a star to this repository.
 - follow: Follow me ;)
@@ -233,7 +234,11 @@ Available commands:
                     case 'clear':
                         output.textContent = 'root@kali:~$';
                         break;
-
+                        
+					case 'exit':
+						if (confirm('Are you sure you want to close this window?')) window.close();
+                        break;
+                        
                     case 'whoami':
                         outputCommand(command, `bruno salvatella teichman`);
                         break;
