@@ -133,9 +133,9 @@
             const output = document.getElementById('output');
 
             // Files and directories in the virtual "directory"
-            const files = ["website.html", "repositories"];
+            const files = ["website.html", "links.html", "Repositories"];
             const directories = {
-                'repositories': ['cybersources', 'fliperzero_payloads', 'repo3']
+                'Repositories': ['cybersources', 'fliperzero_payloads', 'repo3']
             };
 
             let currentDir = '~';  // Default directory
@@ -172,7 +172,7 @@ Available commands:
 
                 switch (mainCommand) {
                     case 'ls':
-                        outputCommand(command, `${getFilesInDir(currentDir).join(', ')}`);
+                        outputCommand(command, `${getFilesInDir(currentDir).join(' ')}`);
                         break;
 
                     case 'open':
@@ -195,6 +195,12 @@ Available commands:
                             outputCommand(command, `Opening website...`);
                             setTimeout(() => {
                                 window.location.href = 'https://brunoooost.github.io/brunoooost/'; // Link for repo3
+                            }, 1000);
+                        }
+                         else if (argument === 'links.html') {
+                            outputCommand(command, `Opening my links...`);
+                            setTimeout(() => {
+                                window.location.href = 'links.html'; // Link
                             }, 1000);
                         }
                         else {
@@ -245,9 +251,9 @@ Available commands:
                                 currentDir = '~'; // Go back to the root directory
                                 outputCommand(command, `Changed directory to /`);
                             }
-                        } else if (argument === 'repositories') {
-                            currentDir = 'repositories';
-                            outputCommand(command, `Changed directory to /repositories`);
+                        } else if (argument === 'Repositories') {
+                            currentDir = 'Repositories';
+                            outputCommand(command, `Changed directory to /Repositories`);
                             updatePrompt();
                         } else if (directories[argument]) {
                             currentDir = argument;
