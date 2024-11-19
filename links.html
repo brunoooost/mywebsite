@@ -16,12 +16,24 @@
             font-family: Arial, sans-serif;
         }
 
+        /* Falling characters */
         .character {
             position: absolute;
             top: -2rem;
             font-size: 1.5rem;
             color: #0F0;
             animation: fall linear forwards;
+            opacity: 0;
+            animation: fadeIn 2s, fall linear forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         @keyframes fall {
@@ -31,31 +43,43 @@
             }
         }
 
-        /* Centered Linktree Container with Solid Box */
+        /* Linktree fade-in and slide-down */
         .linktree {
             position: absolute;
-            top: 50%;
+            top: -100%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             text-align: center;
-
             padding: 2rem 3rem;
             border-radius: 10px;
+            color: #0F0;
+            background: rgba(0, 0, 0, 0.8);
+            animation: slideIn 2s ease-out forwards, fadeIn 2s;
         }
 
+        @keyframes slideIn {
+            0% {
+                top: -100%;
+            }
+            100% {
+                top: 20%;
+            }
+        }
+
+        /* Heading Styles */
         .linktree h1 {
-            color: #0F0;
             font-size: 2rem;
             margin-bottom: 1rem;
+            animation: fadeInText 2s ease-out forwards;
         }
-        
+
         .linktree h2 {
-            color: #0F0;
             font-size: 1rem;
             margin-bottom: 1rem;
+            animation: fadeInText 2s ease-out 0.5s forwards;
         }
-	
-    	
+
+        /* Link Styles */
         .linktree a {
             display: block;
             margin: 0.5rem 0;
@@ -67,11 +91,23 @@
             border-radius: 8px;
             background: black; /* Solid button background */
             transition: background 0.3s, color 0.3s;
+            opacity: 0;
+            animation: fadeInText 2s ease-out 1s forwards;
         }
 
         .linktree a:hover {
             background: #0F0;
             color: black;
+        }
+
+        /* Fade-in animation for text */
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -110,11 +146,10 @@
     <div class="linktree">
         <h1>Bruno Salvatella</h1>
         <h2>This are my links:</h2>
-        <a href="https://www.instagram.com/brusalvateich/" target="_blank">instagram</a>
-        <a href="https://github.com/brunoooost" target="_blank">github</a>
-        <a href="https://www.linkedin.com/in/bruno-salvatella-teichman/" target="_blank">linkedin</a>
-        <a href="https://signal.me/#eu/YiH6rZq86ipsfPShqXmtjw-kE6ATHrvE_sKfofhKNCuOry3YQEhHXInFqhMWLZqo" target="_blank">signal</a>
-        
+        <a href="https://www.instagram.com/brusalvateich/" target="_blank">Instagram</a>
+        <a href="https://github.com/brunoooost" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/bruno-salvatella-teichman/" target="_blank">LinkedIn</a>
+        <a href="https://signal.me/#eu/YiH6rZq86ipsfPShqXmtjw-kE6ATHrvE_sKfofhKNCuOry3YQEhHXInFqhMWLZqo" target="_blank">Signal</a>
     </div>
 </body>
 </html>
