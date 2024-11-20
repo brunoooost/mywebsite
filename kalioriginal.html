@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bruno's desktop</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.hdqwalls.com%2Fwallpapers%2Fkali-linux-dragon-5k-3e.jpg&f=1&nofb=1&ipt=6048b20edbb37a50a8b31be7cb35aea250688d91ba94ce73493d2363f0085d82&ipo=images') no-repeat center center/cover; /* Desktop wallpaper */
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Desktop Icons */
+        .desktop {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 100px);
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            align-items: start;
+            justify-content: start;
+            position: relative;
+        }
+
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+        }
+
+        .icon img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 5px;
+        }
+
+        .icon span {
+            font-size: 14px;
+        }
+
+        /* Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+        }
+
+        .start-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            margin-right: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .taskbar-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .taskbar-icons img {
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+
+        /* Window Style */
+        .window {
+            position: absolute;
+            top: 20%;
+            left: 30%;
+            width: 400px;
+            height: 300px;
+            background-color: white;
+            border: 2px solid #ccc;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            border-radius: 5px;
+        }
+
+        .window-header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+        }
+
+        .window-header span {
+            font-weight: bold;
+        }
+
+        .window-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .window-content {
+            padding: 15px;
+            flex: 1;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+
+        .window-close {
+            font-size: 16px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        /* Hide/show windows */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <!-- Icons -->
+        <div class="icon" onclick="openBrowser()">
+            <img src="https://vectorified.com/images/mozilla-firefox-blue-icon-6.png" alt="Browser Icon">
+            <span>Browser</span>
+        </div>
+        <div class="icon" onclick="openLinks()">
+            <img src="https://icons.iconarchive.com/icons/hopstarter/sleek-xp-software/256/Notepad-icon.png" alt="Browser Icon">
+            <span>Links</span>
+        </div>
+        <div class="icon" onclick="openRepos()">
+            <img src="https://icon-library.com/images/file-folder-icon-png/file-folder-icon-png-10.jpg" alt="Browser Icon">
+            <span>Repos</span>
+        </div>
+        <div class="icon" onclick="openTerminal()">
+            <img src="https://simplecodetips.com/wp-content/uploads/2017/01/Linux-Terminal-icon.png" alt="Browser Icon">
+            <span>Terminal</span>
+        </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <button class="start-button">Start</button>
+        <div class="taskbar-icons">
+        	<div class="icon" onclick="openTerminal()">
+            	<img src="https://simplecodetips.com/wp-content/uploads/2017/01/Linux-Terminal-icon.png" alt="Browser Icon">
+        </div>
+        <div class="icon" onclick="openBrowser()">
+            <img src="https://vectorified.com/images/mozilla-firefox-blue-icon-6.png" alt="Browser Icon">
+            
+        </div>
+        </div>
+    </div>
+
+    <script>
+        // Open browser link
+        function openBrowser() {
+            window.location.href = 'https://brunoooost.github.io/brunoooost/';
+        }
+        function openLinks() {
+        	window.location.href = 'links.html';
+        }
+        function openRepos() {
+        	window.location.href = 'https://brunoooost.github.io/brunoooost/repos.html';
+        }
+        function openTerminal() {
+        	window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
