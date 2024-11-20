@@ -149,6 +149,7 @@
             // List of available commands
             const commandsList = `
 Available commands:
+- desktop: Go to desktop.
 - open [file_name]: Open a specific website.
 - help: Display this help message.
 - clear: Clear the terminal screen.
@@ -212,6 +213,8 @@ Available commands:
                             }, 1000);
                         }
 
+			
+
 			else if (argument === 'infinitevideo.html') {
                             outputCommand(command, `Making a infinite video...`);
                             setTimeout(() => {
@@ -248,6 +251,12 @@ Available commands:
 
                     case 'help':
                         outputCommand(command, commandsList);
+                        break;
+
+		    case 'desktop':
+                         setTimeout(() => {
+                             window.location.href = 'kali.html'; // Link for repo3
+                            }, 1000);
                         break;
                     
                     case 'star':
