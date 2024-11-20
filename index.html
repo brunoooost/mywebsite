@@ -266,6 +266,13 @@ Available commands:
                     case 'clear':
                         output.textContent = 'root@kali:~$';
                         break;
+
+		case 'background':
+			outputCommand(command, `Looking the background...`);
+                        setTimeout(() => {
+                             window.location.href = 'background.html'; 
+                            }, 1000);
+                        break;
                         
                     case 'views':
                        outputCommand(command, `This website has been viewed ${viewCount} times.`);
