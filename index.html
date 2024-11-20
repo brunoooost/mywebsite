@@ -203,6 +203,13 @@ Available commands:
                                 window.location.href = 'links.html'; // Link
                             }, 1000);
                         }
+
+			else if (argument === 'infinitevideo.html') {
+                            outputCommand(command, `Making a infinite video...`);
+                            setTimeout(() => {
+                                window.location.href = 'infinitevideo.html'; // Link
+                            }, 1000);
+                        }
                         
                         else if (argument === 'location.gis') {
                             outputCommand(command, `Loading the current location...\nCurrent location: Spain, Barcelona`);
