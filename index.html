@@ -131,6 +131,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             const commandInput = document.getElementById('command-input');
             const output = document.getElementById('output');
+            
+            // Simulated view count using local storage
+            let viewCount = localStorage.getItem('viewCount') || 0;
+            viewCount++;
+            localStorage.setItem('viewCount', viewCount);
+
 
             // Files and directories in the virtual "directory"
             const files = ["website.html", "links.html","location.gis", "mifare1k_encoder.py","infinitevideo.html", "Repositories"];
@@ -259,6 +265,11 @@ Available commands:
                     case 'clear':
                         output.textContent = 'root@kali:~$';
                         break;
+                        
+                    case 'views':
+                       outputCommand(command, `This website has been viewed ${viewCount} times.`);
+                       break;
+
                         
 					case 'exit':
 						if (confirm('Are you sure you want to close this window?')) window.close();
