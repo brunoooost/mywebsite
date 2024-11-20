@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL to Mifare Classic 1k Encoder</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Falling Characters Background */
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .character {
+            position: absolute;
+            color: #00ff00;
+            font-size: 18px;
+            animation: floatDown linear infinite;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        @keyframes floatDown {
+            0% {
+                transform: translateY(-50vh);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Content Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent overlay */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        select, input, button, textarea {
+            font-size: 1rem;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        textarea {
+            margin-top: 1rem;
+            height: 200px;
+            font-family: monospace;
+            resize: none;
+        }
+
+        footer {
+            margin-top: 2rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <!-- Falling Characters Script -->
+    <script>
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+        const maxCharacters = 100;
+
+        function createCharacter() {
+            const charElement = document.createElement('span');
+            charElement.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
+            charElement.classList.add('character');
+            document.body.appendChild(charElement);
+
+            const startX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 5 + 3;
+            const delay = Math.random() * -10;
+
+            charElement.style.left = `${startX}px`;
+            charElement.style.animationDuration = `${duration}s`;
+            charElement.style.animationDelay = `${delay}s`;
+
+            setTimeout(() => {
+                charElement.remove();
+            }, (duration + Math.abs(delay)) * 1000);
+        }
+
+        setInterval(createCharacter, 100);
+        for (let i = 0; i < maxCharacters; i++) {
+            createCharacter();
+        }
+    </script>
+
+    <!-- Main Content -->
+    <div class="container">
+        <header>
+            <h1>URL to NDEF - Mifare Classic 1k Encoder </h1>
+        </header>
+        <main>
+            <form id="encoder-form">
+                <label for="prefix">Select URL Prefix:</label>
+                <select id="prefix" required>
+                    <option value="04">https://</option>
+                    <option value="02">https://www.</option>
+                    <option value="03">http://</option>
+                    <option value="05">tel:</option>
+                    <option value="06">mailto:</option>
+                    <option value="01">http://www.</option>
+                </select>
+                <label for="url">Enter URL (without prefix):</label>
+                <input type="text" id="url" placeholder="example.com" required>
+                <button type="button" onclick="encodeURL()">Encode URL</button>
+            </form>
+            <textarea id="output" readonly placeholder="NDEF block will appear here..."></textarea>
+        </main>
+        <footer>
+            <p>&copy; 2024 URL Encoder Tool by bst04</p>
+        </footer>
+    </div>
+
+    <script>
+        function encodeURLToHex(url) {
+            return Array.from(url).map(char => char.charCodeAt(0).toString(16).toUpperCase().padStart(2, '0')).join(' ');
+        }
+
+        function calculateNDEF(url, prefix) {
+            const urlWithoutPrefix = url.replace("https://www.", "").replace("https://", "");
+            const lengthWithoutPrefix = urlWithoutPrefix.length + 1;
+            const hexLength = lengthWithoutPrefix.toString(16).toUpperCase().padStart(2, '0');
+
+            const encodedHex = encodeURLToHex(urlWithoutPrefix);
+            const ndefPayload = `D1 01 ${hexLength} 55 ${prefix} ${encodedHex}`;
+
+            const ndefLength = Math.ceil((ndefPayload.replace(/ /g, "").length) / 2);
+            const hexHalfLength = ndefLength.toString(16).toUpperCase().padStart(2, '0');
+
+            const finalResult = `03 ${hexHalfLength} ${ndefPayload} FE`;
+
+            const hexArray = finalResult.split(' ');
+            const blocks = [];
+            const blockSize = 16;
+
+            for (let i = 0; i < hexArray.length; i += blockSize) {
+                const blockNumber = blocks.length + 4;
+                if ((blockNumber % 4) === 3) continue;
+
+                const blockData = hexArray.slice(i, i + blockSize);
+                while (blockData.length < blockSize) blockData.push('00');
+                blocks.push(`Block ${blockNumber}: ${blockData.join(' ')}`);
+            }
+
+            return blocks.join('\n');
+        }
+
+        function encodeURL() {
+            const prefix = document.getElementById("prefix").value;
+            const url = document.getElementById("url").value.trim();
+
+            if (!url) {
+                alert("Please enter a valid URL.");
+                return;
+            }
+
+            try {
+                const encodedNDEF = calculateNDEF(url, prefix);
+                document.getElementById("output").value = encodedNDEF;
+            } catch (error) {
+                document.getElementById("output").value = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
