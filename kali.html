@@ -55,59 +55,22 @@
             font-size: 14px;
         }
 
-        /* Taskbar */
-        .taskbar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 0%;
-            height: 50px;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            color: white;
-        }
-
-        .start-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #1e88e5;
-            color: white;
-            border: none;
-            padding: 5px 15px;
-            margin-right: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .taskbar-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .taskbar-icons img {
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-        }
-
-        /* Window Style */
+        /* Window Styling */
         .window {
             position: absolute;
-            top: 20%;
-            left: 30%;
-            width: 400px;
-            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            height: 700px;
             background-color: white;
             border: 2px solid #ccc;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            display: flex;
+            display: none; /* Initially hidden */
             flex-direction: column;
             z-index: 10;
             border-radius: 5px;
+            overflow: hidden;
         }
 
         .window-header {
@@ -117,7 +80,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: move;
         }
 
         .window-header span {
@@ -138,17 +100,6 @@
             overflow-y: auto;
             font-size: 14px;
         }
-
-        .window-close {
-            font-size: 16px;
-            margin-left: 5px;
-            cursor: pointer;
-        }
-
-        /* Hide/show windows */
-        .hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -159,46 +110,105 @@
             <span>Browser</span>
         </div>
         <div class="icon" onclick="openLinks()">
-            <img src="https://icons.iconarchive.com/icons/hopstarter/sleek-xp-software/256/Notepad-icon.png" alt="Browser Icon">
+            <img src="https://icons.iconarchive.com/icons/hopstarter/sleek-xp-software/256/Notepad-icon.png" alt="Links Icon">
             <span>Links</span>
         </div>
         <div class="icon" onclick="openRepos()">
-            <img src="https://icon-library.com/images/file-folder-icon-png/file-folder-icon-png-10.jpg" alt="Browser Icon">
+            <img src="https://icon-library.com/images/file-folder-icon-png/file-folder-icon-png-10.jpg" alt="Repos Icon">
             <span>Repos</span>
         </div>
         <div class="icon" onclick="openTerminal()">
-            <img src="https://simplecodetips.com/wp-content/uploads/2017/01/Linux-Terminal-icon.png" alt="Browser Icon">
+            <img src="https://simplecodetips.com/wp-content/uploads/2017/01/Linux-Terminal-icon.png" alt="Terminal Icon">
             <span>Terminal</span>
+        </div>
+        <div class="icon" onclick="openVisual()">
+            <img src="https://iconape.com/wp-content/png_logo_vector/visual-studio-code.png" alt="VS Code Icon">
+            <span>Visual Studio Code</span>
         </div>
     </div>
 
-    <!-- Taskbar -->
-    <div class="taskbar">
-        <button class="start-button">Start</button>
-        <div class="taskbar-icons">
-        	<div class="icon" onclick="openTerminal()">
-            	<img src="https://simplecodetips.com/wp-content/uploads/2017/01/Linux-Terminal-icon.png" alt="Browser Icon">
+    <!-- Simulated Popup Windows -->
+    <div class="window" id="popupBrowser">
+        <div class="window-header">
+            <span>Browser</span>
+            <button onclick="closePopup('popupBrowser')">×</button>
         </div>
-        <div class="icon" onclick="openBrowser()">
-            <img src="https://vectorified.com/images/mozilla-firefox-blue-icon-6.png" alt="Browser Icon">
-            
+        <div class="window-content">
+            <iframe src="https://brunoooost.github.io/brunoooost/" width="100%" height="100%" frameborder="0"></iframe>
         </div>
+    </div>
+
+    <div class="window" id="popupLinks">
+        <div class="window-header">
+            <span>Links</span>
+            <button onclick="closePopup('popupLinks')">×</button>
+        </div>
+        <div class="window-content">
+            <iframe src="links.html" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div class="window" id="popupRepos">
+        <div class="window-header">
+            <span>Repos</span>
+            <button onclick="closePopup('popupRepos')">×</button>
+        </div>
+        <div class="window-content">
+            <iframe src="https://brunoooost.github.io/brunoooost/repos.html" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div class="window" id="popupTerminal">
+        <div class="window-header">
+            <span>Terminal</span>
+            <button onclick="closePopup('popupTerminal')">×</button>
+        </div>
+        <div class="window-content">
+            <iframe src="index.html" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <div class="window" id="popupVisual">
+        <div class="window-header">
+            <span>Visual Studio Code</span>
+            <button onclick="closePopup('popupVisual')">×</button>
+        </div>
+        <div class="window-content">
+            <iframe src="index.html" width="100%" height="100%" frameborder="0"></iframe>
         </div>
     </div>
 
     <script>
-        // Open browser link
+        // Function to open the popup window
         function openBrowser() {
-            window.location.href = 'https://brunoooost.github.io/brunoooost/';
+            const popup = document.getElementById('popupBrowser');
+            popup.style.display = 'flex'; // Show the popup
         }
+
         function openLinks() {
-        	window.location.href = 'links.html';
+            const popup = document.getElementById('popupLinks');
+            popup.style.display = 'flex'; // Show the popup
         }
+
         function openRepos() {
-        	window.location.href = 'https://brunoooost.github.io/brunoooost/repos.html';
+            const popup = document.getElementById('popupRepos');
+            popup.style.display = 'flex'; // Show the popup
         }
+
         function openTerminal() {
-        	window.location.href = 'index.html';
+            const popup = document.getElementById('popupTerminal');
+            popup.style.display = 'flex'; // Show the popup
+        }
+
+        function openVisual() {
+            const popup = document.getElementById('popupVisual');
+            popup.style.display = 'flex'; // Show the popup
+        }
+
+        // Function to close the popup window
+        function closePopup(id) {
+            const popup = document.getElementById(id);
+            popup.style.display = 'none'; // Hide the popup
         }
     </script>
 </body>
