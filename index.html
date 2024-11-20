@@ -133,7 +133,7 @@
             const output = document.getElementById('output');
 
             // Files and directories in the virtual "directory"
-            const files = ["website.html", "links.html","location.gis", "Repositories"];
+            const files = ["website.html", "links.html","location.gis", "mifare1k_encoder.py", "Repositories"];
             const directories = {
                 'Repositories': ['cybersources', 'fliperzero_payloads', 'redprotect']
             };
@@ -209,6 +209,14 @@ Available commands:
                             outputCommand(command, `Loading the current location...\nCurrent location: Spain, Barcelona`);
                         
                         }
+                        
+                        else if (argument === 'mifare1k_encoder.py') {
+                            outputCommand(command, `Loading the encoder...`);
+                        	setTimeout(() => {
+                                window.location.href = 'mifare1k.html'; // Link
+                            }, 1000);
+                        }
+                        
                         else {
                             outputCommand(command, `File not found: ${argument}`);
                         }
