@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bruno's desktop</title>
+    <title>Bruno's Desktop</title>
     <style>
         /* General Reset */
         * {
@@ -104,7 +104,7 @@
 </head>
 <body>
     <div class="desktop">
-        <!-- Icons -->
+        <!-- Existing Icons -->
         <div class="icon" onclick="openBrowser()">
             <img src="https://vectorified.com/images/mozilla-firefox-blue-icon-6.png" alt="Browser Icon">
             <span>Browser</span>
@@ -125,9 +125,14 @@
             <img src="https://iconape.com/wp-content/png_logo_vector/visual-studio-code.png" alt="VS Code Icon">
             <span>Visual Studio Code</span>
         </div>
+        <!-- New Icon -->
+        <div class="icon" onclick="openMifare()">
+            <img src="https://cdn-icons-png.flaticon.com/512/1436/1436341.png" alt="Mifare Icon">
+            <span>URL to Mifare</span>
+        </div>
     </div>
 
-    <!-- Simulated Popup Windows -->
+    <!-- Existing Popup Windows -->
     <div class="window" id="popupBrowser">
         <div class="window-header">
             <span>Browser</span>
@@ -178,37 +183,46 @@
         </div>
     </div>
 
+    <!-- New Popup Window -->
+    <div class="window" id="popupMifare">
+        <div class="window-header">
+            <span>Mifare</span>
+            <button onclick="closePopup('popupMifare')">×</button>
+        </div>
+        <div class="window-content">
+            <iframe src="https://brunoooost.github.io/mywebsite/mifare1k.html" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+    </div>
+
     <script>
-        // Function to open the popup window
+        // Existing Functions
         function openBrowser() {
-            const popup = document.getElementById('popupBrowser');
-            popup.style.display = 'flex'; // Show the popup
+            document.getElementById('popupBrowser').style.display = 'flex';
         }
 
         function openLinks() {
-            const popup = document.getElementById('popupLinks');
-            popup.style.display = 'flex'; // Show the popup
+            document.getElementById('popupLinks').style.display = 'flex';
         }
 
         function openRepos() {
-            const popup = document.getElementById('popupRepos');
-            popup.style.display = 'flex'; // Show the popup
+            document.getElementById('popupRepos').style.display = 'flex';
         }
 
         function openTerminal() {
-            const popup = document.getElementById('popupTerminal');
-            popup.style.display = 'flex'; // Show the popup
+            document.getElementById('popupTerminal').style.display = 'flex';
         }
 
         function openVisual() {
-            const popup = document.getElementById('popupVisual');
-            popup.style.display = 'flex'; // Show the popup
+            document.getElementById('popupVisual').style.display = 'flex';
         }
 
-        // Function to close the popup window
+        // New Function
+        function openMifare() {
+            document.getElementById('popupMifare').style.display = 'flex';
+        }
+
         function closePopup(id) {
-            const popup = document.getElementById(id);
-            popup.style.display = 'none'; // Hide the popup
+            document.getElementById(id).style.display = 'none';
         }
     </script>
 </body>
