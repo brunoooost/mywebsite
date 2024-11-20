@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>links.html</title>
+    <title>Stylish Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* General Reset */
         body, html {
@@ -12,28 +13,26 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: black;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #000000, #0F0A0A);
+            font-family: 'Roboto Mono', monospace;
+            color: #0F0;
         }
 
         /* Falling characters */
         .character {
             position: absolute;
             top: -2rem;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
             color: #0F0;
-            animation: fall linear forwards;
+            text-shadow: 0 0 5px #0F0, 0 0 10px #0F0;
             opacity: 0;
             animation: fadeIn 2s, fall linear forwards;
         }
 
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         @keyframes fall {
@@ -43,70 +42,84 @@
             }
         }
 
-        /* Linktree fade-in and slide-down */
+        /* Linktree Section */
         .linktree {
             position: absolute;
             top: -100%;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
-            padding: 2rem 3rem;
-            border-radius: 10px;
-            color: #0F0;
-            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.9);
+            width: 90%;
+            max-width: 500px;
             animation: slideIn 2s ease-out forwards, fadeIn 2s;
         }
 
         @keyframes slideIn {
-            0% {
-                top: -100%;
-            }
-            100% {
-                top: 20%;
-            }
+            0% { top: -100%; }
+            100% { top: 15%; }
         }
 
-        /* Heading Styles */
         .linktree h1 {
             font-size: 2rem;
-            margin-bottom: 1rem;
-            animation: fadeInText 2s ease-out forwards;
+            margin-bottom: 0.8rem;
+            font-family: 'Orbitron', sans-serif;
+            color: #0F0;
         }
 
         .linktree h2 {
             font-size: 1rem;
-            margin-bottom: 1rem;
-            animation: fadeInText 2s ease-out 0.5s forwards;
+            margin-bottom: 1.5rem;
+            color: #0F0;
+            font-family: 'Roboto Mono', monospace;
         }
 
-        /* Link Styles */
+        /* Links */
         .linktree a {
             display: block;
-            margin: 0.5rem 0;
-            padding: 0.5rem 2rem; /* Increased padding */
-            font-size: 1.5rem; /* Increased font size */
-            color: #0F0;
+            margin: 0.7rem 0;
+            padding: 0.6rem 1.5rem;
+            font-size: 1.2rem;
             text-decoration: none;
+            font-family: 'Roboto Mono', monospace;
+            color: #0F0;
             border: 2px solid #0F0;
-            border-radius: 8px;
-            background: black; /* Solid button background */
-            transition: background 0.3s, color 0.3s;
-            opacity: 0;
-            animation: fadeInText 2s ease-out 1s forwards;
+            border-radius: 10px;
+            
+            background: rgba(0, 0, 0, 0.8);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
         }
 
         .linktree a:hover {
             background: #0F0;
-            color: black;
+            color: #000;
+            transform: scale(1.05);
+       
         }
 
-        /* Fade-in animation for text */
-        @keyframes fadeInText {
-            0% {
-                opacity: 0;
+        /* Media Query for Mobile Screens */
+        @media screen and (max-width: 768px) {
+            .linktree {
+                padding: 1.5rem;
             }
-            100% {
-                opacity: 1;
+
+            .linktree h1 {
+                font-size: 1.5rem;
+            }
+
+            .linktree h2 {
+                font-size: 0.9rem;
+            }
+
+            .linktree a {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .character {
+                font-size: 1rem;
             }
         }
     </style>
@@ -115,7 +128,7 @@
     <!-- Falling Characters Script -->
     <script>
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
-        const maxCharacters = 100;
+        const maxCharacters = 120;
 
         function createCharacter() {
             const charElement = document.createElement('span');
