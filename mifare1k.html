@@ -58,6 +58,20 @@
             max-width: 600px;
             padding: 2rem;
             text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInSlide 1s ease-out forwards;
+        }
+
+        @keyframes fadeInSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         header {
@@ -148,9 +162,10 @@
     <!-- Main Content -->
     <div class="container">
         <header>
-            <h1>URL to NDEF - Mifare Classic 1k Encoder </h1>
+            <h1>🛠️ URL to Mifare Classic 1k Encoder 🛠️</h1>
         </header>
         <main>
+            <h2>Encode a URL to NDEF Blocks</h2>
             <form id="encoder-form">
                 <label for="prefix">Select URL Prefix:</label>
                 <select id="prefix" required>
@@ -168,7 +183,7 @@
             <textarea id="output" readonly placeholder="NDEF block will appear here..."></textarea>
         </main>
         <footer>
-            <p>&copy; 2024 URL Encoder Tool by bst04</p>
+            <p>&copy; 2024 URL Encoder Tool</p>
         </footer>
     </div>
 
