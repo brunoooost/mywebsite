@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>matrix efect</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000; /* Dark background */
+            font-family: "Courier New", Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Falling Characters Effect */
+        .character {
+            position: absolute;
+            color: #00ff00;
+            font-size: 18px;
+            animation: floatDown linear infinite;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        @keyframes floatDown {
+            0% {
+                transform: translateY(-50vh);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Characters for the falling effect
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+        const maxCharacters = 100;
+
+        // Function to create and animate a single character
+        function createCharacter() {
+            const charElement = document.createElement('span');
+            charElement.textContent = characters.charAt(Math.floor(Math.random() * characters.length));
+            charElement.classList.add('character');
+            document.body.appendChild(charElement);
+
+            const startX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 5 + 3;
+            const delay = Math.random() * -10;
+
+            charElement.style.left = `${startX}px`;
+            charElement.style.animationDuration = `${duration}s`;
+            charElement.style.animationDelay = `${delay}s`;
+
+            // Remove character element after animation completes
+            setTimeout(() => {
+                charElement.remove();
+            }, (duration + Math.abs(delay)) * 1000);
+        }
+
+        // Create multiple falling characters
+        setInterval(createCharacter, 100);
+        for (let i = 0; i < maxCharacters; i++) {
+            createCharacter();
+        }
+    </script>
+</body>
+</html>
