@@ -166,14 +166,23 @@
             <img src="https://icon-library.com/images/file-folder-icon-png/file-folder-icon-png-10.jpg" alt="Browser Icon">
             <span>Repos</span>
         </div>
+        <div class="icon" onclick="openTerminal()">
+            <img src="https://simplecodetips.com/wp-content/uploads/2017/01/Linux-Terminal-icon.png" alt="Browser Icon">
+            <span>Terminal</span>
+        </div>
     </div>
 
     <!-- Taskbar -->
     <div class="taskbar">
         <button class="start-button">Start</button>
         <div class="taskbar-icons">
-            <img src="https://via.placeholder.com/32?text=App1" alt="App1">
-            <img src="https://via.placeholder.com/32?text=App2" alt="App2">
+        	<div class="icon" onclick="openTerminal()">
+            	<img src="https://simplecodetips.com/wp-content/uploads/2017/01/Linux-Terminal-icon.png" alt="Browser Icon">
+        </div>
+        <div class="icon" onclick="openBrowser()">
+            <img src="https://vectorified.com/images/mozilla-firefox-blue-icon-6.png" alt="Browser Icon">
+            
+        </div>
         </div>
     </div>
 
@@ -187,6 +196,9 @@
         }
         function openRepos() {
         	window.location.href = 'https://brunoooost.github.io/brunoooost/repos.html';
+        }
+        function openTerminal() {
+        	window.location.href = 'index.html';
         }
     </script>
 </body>
